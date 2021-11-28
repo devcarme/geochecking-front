@@ -37,6 +37,9 @@ export default function BasicModal(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Score : { props.score }
           </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Temps : { props.timeScore}
+          </Typography>
         </Box>
       </Modal>
     </div>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import map from './assets/map_USA.svg';
 import { TextField, Button } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
-import Stopwatch from './components/StopWatch';
 import jsonUSA from './components/usa.json';
 import ModalResults from './components/ModalResults';
 import Box from '@mui/material/Box';
@@ -10,20 +9,19 @@ import Box from '@mui/material/Box';
 import './App.css';
 
 function App() {
-  const [startStopWatch, setStartStopWatch] = useState(false);
   const [arrayUSA, setArrayUSA] = useState(new Map());
   const [arrayUSAResult, setArrayUSAResult] = useState([]);
   const [open, setOpen] = useState(false);
   const [resultScore, setResultScore] = useState("");
+  const [time, setTime] = useState(0);
+  const [start, setStart] = useState(false);
+  const [timeScore, setTimeScore] = useState("");
 
   const initialiseMap = () => {
     const mapUSA = new Map();
 
     jsonUSA.states.forEach(item => {
       mapUSA.set(item.number, item.name);
-    });
-    Array(mapUSA.size).fill(0).forEach((item, index) => {
-      arrayUSAResult[index] = { name: "", number: index + 1 };
     });
     setArrayUSA(mapUSA);
   }
@@ -39,6 +37,10 @@ function App() {
   }
 
   const verifyResults = () => {
+    const minutes = ("0" + Math.floor(time / 60000)).slice(-2);
+    const seconds = ("0" + Math.floor(time / 1000)).slice(-2);
+    const hundredthOfSeconds  = ("0" + (time / 10) % 1000).slice(-2);
+    setTimeScore(minutes + "m " + seconds + "s " + hundredthOfSeconds + "c");
     let count = 0;
     arrayUSAResult.slice(0).map((item, index) => {
       if (item.name.toUpperCase() === arrayUSA.get(index + 1).toUpperCase()) {
@@ -50,8 +52,8 @@ function App() {
       }
     });
     setResultScore(count + " / " + arrayUSA.size);
-    console.log(count + " / " + arrayUSA.size);
-  }
+    setStart(false);
+  }   
 
   const handleOpen = () => {
     verifyResults();
@@ -60,6 +62,7 @@ function App() {
 
   const handleClose = () => {
     setOpen(false);
+    setTime(0);
   };
 
   const resetFields = () => {
@@ -69,17 +72,34 @@ function App() {
       item.error = false;
     });
     initialiseMap();
-  }
+  };
 
+  const newTry = () => {
+    setStart(true);
+    Array(arrayUSA.size).fill(0).forEach((item, index) => {
+      arrayUSAResult[index] = { name: "", number: index + 1 };
+    });
+  };
+  
   useEffect(() => {
     initialiseMap();
-  }, []);
+    let interval = null;
+    if (start) {
+      interval = setInterval(() => {
+        setTime(prevTime => prevTime + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [start]);
 
   return (
     <div className="App">
       <div className="App-header">
         <div>
-          <ModalResults open={open} onClose={handleClose} score={resultScore} />
+          <ModalResults open={open} onClose={handleClose} score={resultScore} timeScore={timeScore}/>
         </div>
         <div className="map-wrapper">
           <img src={map} className="map" alt="Carte" />
@@ -141,10 +161,12 @@ function App() {
                 <TimerIcon color="primary" sx={{ fontSize: 40 }} />
               </div>
               <div className="stopwatch">
-                <Stopwatch setStart={startStopWatch} />
+                <span>{("0" + Math.floor(time / 60000)).slice(-2)}:</span>
+                <span>{("0" + Math.floor(time / 1000)).slice(-2)}:</span>
+                <span>{("0" + (time / 10) % 1000).slice(-2)}</span>
               </div>
               <div className="btn-start-wrapper">
-                <Button className="btn-start" variant="contained" color="primary" onClick={resetFields}>
+                <Button className="btn-start" variant="contained" color="primary" onClick={newTry}>
                   GO !
                 </Button>
               </div>
