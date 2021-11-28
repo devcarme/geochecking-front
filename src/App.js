@@ -8,10 +8,9 @@ import jsonUSA from './components/usa.json';
 import './App.css';
 
 function App() {
-  const [startStopWatch, setStartStopWatch] = useState(false);
+  // const [startStopWatch, setStartStopWatch] = useState(false);
   const [arrayUSA, setArrayUSA] = useState(new Map());
-  const [arrayUSAResult, setArrayUSAResult] = useState(new Map());
-  const [values, setValues] = useState([])
+  const [arrayUSAResult, setArrayUSAResult] = useState([]);
 
   const initialiseMap = () => {
     const mapUSA = new Map();
@@ -19,13 +18,30 @@ function App() {
     jsonUSA.states.forEach(item => {
       mapUSA.set(item.number, item.name);
     });
+    Array(mapUSA.size).fill(0).forEach((item, index) => {
+      arrayUSAResult[index] = {name: "", number: index + 1};
+    });
     setArrayUSA(mapUSA);
   }
 
-  const handleChangeValues = (index, value) => {
-    const mapTmp = new Map(arrayUSAResult);
-    mapTmp.set(index, value);
-    setArrayUSAResult(mapTmp);
+  const handleChangeValues = (e, item) => {
+    e.preventDefault();
+    let result = arrayUSAResult;   // copy state
+    result = result.map((el) => {  // map array to replace the old comment with the new one
+      if (el.number === item.number) el.name = e.target.value;
+      return el;
+    });
+    setArrayUSAResult(result); // set state with new comment
+  }
+  
+  const verifyResults = () => {
+    let result = true;
+    arrayUSAResult.slice(0).map((item, index) => {
+      if (item.name !== arrayUSA.get(index + 1)) result = false;
+      console.log("result " + item.name);
+      console.log("verification " + arrayUSA.get(index + 1));      
+    });
+    console.log(result);
   }
 
   useEffect(() => {
@@ -41,13 +57,13 @@ function App() {
         <div className="main-content">
           <div className="propositions-wrapper">
             <div className="propositions-left">
-              {Array(25).fill(0).map((el, i) =>
-                <TextField id="outlined-basic" label={i + 1} variant="outlined" key={i + 1} value={values[i + 1]} name={values[i + 1]} onChange={handleChangeValues.bind(this, i + 1)} />
+              {arrayUSAResult.slice(0, arrayUSAResult.length / 2).map((item) =>
+                <TextField id="outlined-basic" label={item.number} variant="outlined" key={item.number} value={item.name} name={"input" + item.number} onChange={(e) => {handleChangeValues(e, item); }} />
               )}
             </div>
             <div className="propositions-right">
-              {Array(25).fill(0).map((el, i) =>
-                <TextField id="outlined-basic" label={i + 26} variant="outlined" key={i + 26} value={values[i + 26]} name={values[i + 26]} onChange={handleChangeValues.bind(this, i + 26)}/>
+              {arrayUSAResult.slice(arrayUSAResult.length / 2, arrayUSAResult.length).map((item) =>
+                <TextField id="outlined-basic" label={item.number} variant="outlined" key={item.number} value={item.name} name={"input" + item.number} onChange={(e) => {handleChangeValues(e, item); }}/>
               )}
             </div>
             <div className="timer">
@@ -64,14 +80,13 @@ function App() {
               </div>
             </div>
             <div className="button-wrapper">
-              <Button className="button" variant="contained" color="success">
+              <Button className="button" variant="contained" color="success" onClick={verifyResults}>
                 Valider
               </Button>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 }
