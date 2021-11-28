@@ -8,7 +8,7 @@ import jsonUSA from './components/usa.json';
 import './App.css';
 
 function App() {
-  // const [startStopWatch, setStartStopWatch] = useState(false);
+  const [startStopWatch, setStartStopWatch] = useState(false);
   const [arrayUSA, setArrayUSA] = useState(new Map());
   const [arrayUSAResult, setArrayUSAResult] = useState([]);
 
