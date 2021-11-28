@@ -62,7 +62,6 @@ function App() {
 
   const handleClose = () => {
     setOpen(false);
-    setTime(0);
   };
 
   const resetFields = () => {
@@ -71,10 +70,11 @@ function App() {
       item.success = "";
       item.error = false;
     });
-    initialiseMap();
+    // initialiseMap();
   };
 
   const newTry = () => {
+    setTime(0);
     setStart(true);
     Array(arrayUSA.size).fill(0).forEach((item, index) => {
       arrayUSAResult[index] = { name: "", number: index + 1 };
