@@ -16,6 +16,7 @@ function App() {
   const [time, setTime] = useState(0);
   const [start, setStart] = useState(false);
   const [timeScore, setTimeScore] = useState("");
+  const [enableVerify, setEnableVerify] = useState(false);
 
   const initialiseMap = () => {
     const mapUSA = new Map();
@@ -57,6 +58,7 @@ function App() {
 
   const handleOpen = () => {
     verifyResults();
+    setEnableVerify(false);
     setOpen(true);
   };
 
@@ -74,6 +76,7 @@ function App() {
   };
 
   const newTry = () => {
+    setEnableVerify(true);
     setTime(0);
     setStart(true);
     Array(arrayUSA.size).fill(0).forEach((item, index) => {
@@ -166,13 +169,25 @@ function App() {
                 <span>{("0" + (time / 10) % 1000).slice(-2)}</span>
               </div>
               <div className="btn-start-wrapper">
-                <Button className="btn-start" variant="contained" color="primary" onClick={newTry}>
+                <Button 
+                  className="btn-start" 
+                  variant="contained" 
+                  color="primary" 
+                  onClick={newTry}
+                  disabled={enableVerify}
+                >
                   GO !
                 </Button>
               </div>
             </div>
             <div className="button-wrapper">
-              <Button className="button" variant="contained" color="success" onClick={handleOpen}>
+              <Button 
+                className="button" 
+                variant="contained" 
+                color="success" 
+                onClick={handleOpen}
+                disabled={!enableVerify}
+              >
                 Valider
               </Button>
             </div>
