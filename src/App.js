@@ -40,7 +40,7 @@ function App() {
   const verifyResults = () => {
     const minutes = ("0" + Math.floor(time / 60000)).slice(-2);
     const seconds = ("0" + Math.floor(time / 1000)).slice(-2);
-    const hundredthOfSeconds  = ("0" + (time / 10) % 1000).slice(-2);
+    const hundredthOfSeconds = ("0" + (time / 10) % 1000).slice(-2);
     setTimeScore(minutes + "m " + seconds + "s " + hundredthOfSeconds + "c");
     let count = 0;
     arrayUSAResult.slice(0).map((item, index) => {
@@ -54,7 +54,7 @@ function App() {
     });
     setResultScore(count + " / " + arrayUSA.size);
     setStart(false);
-  }   
+  }
 
   const handleOpen = () => {
     verifyResults();
@@ -72,7 +72,6 @@ function App() {
       item.success = "";
       item.error = false;
     });
-    // initialiseMap();
   };
 
   const newTry = () => {
@@ -83,7 +82,7 @@ function App() {
       arrayUSAResult[index] = { name: "", number: index + 1 };
     });
   };
-  
+
   useEffect(() => {
     initialiseMap();
     let interval = null;
@@ -102,13 +101,34 @@ function App() {
     <div className="App">
       <div className="App-header">
         <div>
-          <ModalResults open={open} onClose={handleClose} score={resultScore} timeScore={timeScore}/>
+          <ModalResults open={open} onClose={handleClose} score={resultScore} timeScore={timeScore} />
         </div>
         <div className="map-wrapper">
           <img src={map} className="map" alt="Carte" />
         </div>
         <div className="main-content">
           <div className="propositions-wrapper">
+            <div className="timer">
+              <div className="timer-icon">
+                <TimerIcon color="primary" sx={{ fontSize: 40 }} />
+              </div>
+              <div className="stopwatch">
+                <span>{("0" + Math.floor(time / 60000)).slice(-2)}:</span>
+                <span>{("0" + Math.floor(time / 1000)).slice(-2)}:</span>
+                <span>{("0" + (time / 10) % 1000).slice(-2)}</span>
+              </div>
+              <div className="btn-start-wrapper">
+                <Button
+                  className="btn-start"
+                  variant="contained"
+                  color="primary"
+                  onClick={newTry}
+                  disabled={enableVerify}
+                >
+                  GO !
+                </Button>
+              </div>
+            </div>
             <div className="propositions-left">
               {arrayUSAResult.slice(0, arrayUSAResult.length / 2).map((item) =>
                 <Box
@@ -119,17 +139,17 @@ function App() {
                   noValidate
                   autoComplete="off"
                 >
-                  <TextField 
+                  <TextField
                     error={item.error}
                     color={item.success}
                     focused
-                    id="outlined-basic" 
-                    label={item.number} 
-                    variant="outlined" 
-                    key={item.number} 
-                    value={item.name} 
-                    name={"input" + item.number} 
-                    onChange={(e) => { handleChangeValues(e, item); }} 
+                    id="outlined-basic"
+                    label={item.number}
+                    variant="outlined"
+                    key={item.number}
+                    value={item.name}
+                    name={"input" + item.number}
+                    onChange={(e) => { handleChangeValues(e, item); }}
                   />
                 </Box>
               )}
@@ -144,47 +164,26 @@ function App() {
                   noValidate
                   autoComplete="off"
                 >
-                  <TextField 
+                  <TextField
                     error={item.error}
                     color={item.success}
                     focused
-                    id="outlined-basic" 
-                    label={item.number} 
-                    variant="outlined" 
-                    key={item.number} 
-                    value={item.name} 
-                    name={"input" + item.number} 
-                    onChange={(e) => { handleChangeValues(e, item); }} 
+                    id="outlined-basic"
+                    label={item.number}
+                    variant="outlined"
+                    key={item.number}
+                    value={item.name}
+                    name={"input" + item.number}
+                    onChange={(e) => { handleChangeValues(e, item); }}
                   />
                 </Box>
               )}
             </div>
-            <div className="timer">
-              <div className="timer-icon">
-                <TimerIcon color="primary" sx={{ fontSize: 40 }} />
-              </div>
-              <div className="stopwatch">
-                <span>{("0" + Math.floor(time / 60000)).slice(-2)}:</span>
-                <span>{("0" + Math.floor(time / 1000)).slice(-2)}:</span>
-                <span>{("0" + (time / 10) % 1000).slice(-2)}</span>
-              </div>
-              <div className="btn-start-wrapper">
-                <Button 
-                  className="btn-start" 
-                  variant="contained" 
-                  color="primary" 
-                  onClick={newTry}
-                  disabled={enableVerify}
-                >
-                  GO !
-                </Button>
-              </div>
-            </div>
             <div className="button-wrapper">
-              <Button 
-                className="button" 
-                variant="contained" 
-                color="success" 
+              <Button
+                className="button"
+                variant="contained"
+                color="success"
                 onClick={handleOpen}
                 disabled={!enableVerify}
               >

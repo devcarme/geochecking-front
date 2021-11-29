@@ -1,5 +1,10 @@
+body {
+  background-color: white;
+}
+
 .App {
   text-align: center;
+  overflow-y: hidden; 
 }
 
 .App-logo {
@@ -15,11 +20,11 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -51,6 +56,7 @@
   background-color: white;
   position: fixed;
   overflow-y: scroll;
+  overflow-x: hidden;
   right: 0;
   bottom: 9%;
   height: 80%;
@@ -67,12 +73,18 @@
   flex-direction: row;
   align-items: flex-start;
   width: 100%;
+  height: auto;
 }
 
 .button-wrapper {
   position: fixed;
   align-self: flex-end;
   right: 10px;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
 }
 
 .timer-icon {
@@ -84,7 +96,7 @@
   position: fixed;
   top: 125px;
   right: 10px;
-  color: black;
+  color: #2196f3;
 }
 
 .btn-start-wrapper {
@@ -117,3 +129,57 @@
   }
 }
 
+@media (max-width: 600px) {
+  .map-wrapper {
+    top: 10%;
+  }
+
+  .map {
+    width: 100%;
+    height: auto;  
+  }
+
+  .App-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .propositions-wrapper {
+    position: fixed;
+    overflow-y: scroll;
+    right: 0;
+    bottom: 9%;
+    height: 45%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: space-around;
+    justify-content: flex-start;
+    padding: 5px;
+  }
+
+  .timer-icon {
+    top: 36%;
+    left: -200px;
+  }
+
+  .stopwatch {
+    top: 37%;
+    left: -45px;
+  }
+
+  .btn-start-wrapper {
+    top: 36%;
+    right: 30px;
+  }
+
+  .timer{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
