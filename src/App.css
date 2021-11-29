@@ -150,7 +150,7 @@ body {
     position: fixed;
     overflow-y: scroll;
     right: 0;
-    bottom: 9%;
+    bottom: 0;
     height: 45%;
     width: 100%;
     display: flex;
@@ -161,17 +161,17 @@ body {
   }
 
   .timer-icon {
-    top: 36%;
+    top: 38%;
     left: -200px;
   }
 
   .stopwatch {
-    top: 37%;
+    top: 39%;
     left: -45px;
   }
 
   .btn-start-wrapper {
-    top: 36%;
+    top: 38%;
     right: 30px;
   }
 
