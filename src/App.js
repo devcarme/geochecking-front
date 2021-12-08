@@ -96,7 +96,7 @@ function App() {
 
     return () => clearInterval(interval);
   }, [start]);
-
+  
   return (
     <div className="App">
       <div className="App-header">
