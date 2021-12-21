@@ -119,8 +119,8 @@ const oauthSignIn = () => {
 }
 
   useEffect(() => {
-    initialiseMap();
     oauthSignIn();
+    initialiseMap();
     let interval = null;
     if (start) {
       interval = setInterval(() => {
