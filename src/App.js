@@ -5,6 +5,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import jsonUSA from './components/usa.json';
 import ModalResults from './components/ModalResults';
 import Box from '@mui/material/Box';
+import googleParams from './geochecking-335815-28d725a08742.json';
 
 import './App.css';
 
@@ -83,8 +84,43 @@ function App() {
     });
   };
 
+/*
+ * Create form to request access token from Google's OAuth 2.0 server.
+ */
+const oauthSignIn = () => {
+  // Google's OAuth 2.0 endpoint for requesting an access token
+  var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+  // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+  var form = document.createElement('form');
+  form.setAttribute('method', 'GET'); // Send as a GET request.
+  form.setAttribute('action', oauth2Endpoint);
+
+  // Parameters to pass to OAuth 2.0 endpoint.
+  var params = {'client_id': googleParams.client_id,
+                'redirect_uri': 'https://zen-swanson-cd2c20.netlify.app/google81a3a40b303e48b6.html',
+                'response_type': 'token',
+                'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
+                'include_granted_scopes': 'true',
+                'state': 'pass-through value'};
+
+  // Add form parameters as hidden input values.
+  for (var p in params) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', p);
+    input.setAttribute('value', params[p]);
+    form.appendChild(input);
+  }
+
+  // Add form to page and submit it to open the OAuth 2.0 endpoint.
+  document.body.appendChild(form);
+  form.submit();
+}
+
   useEffect(() => {
     initialiseMap();
+    oauthSignIn();
     let interval = null;
     if (start) {
       interval = setInterval(() => {
