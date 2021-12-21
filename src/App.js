@@ -98,7 +98,7 @@ const oauthSignIn = () => {
 
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {'client_id': googleParams.client_id,
-                'redirect_uri': 'https://zen-swanson-cd2c20.netlify.app',
+                'redirect_uri': 'https://zen-swanson-cd2c20.netlify.app/',
                 'response_type': 'token',
                 'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
                 'include_granted_scopes': 'true',
