@@ -56,7 +56,8 @@ function App() {
     setStart(false);
   }
 
-  const handleOpen = () => {
+  const handleOpen = (event) => {
+    event.preventDefault();
     verifyResults();
     setEnableVerify(false);
     setOpen(true);
@@ -64,14 +65,6 @@ function App() {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const resetFields = () => {
-    arrayUSAResult.slice(0).map((item, index) => {
-      item.name = "";
-      item.success = "";
-      item.error = false;
-    });
   };
 
   const newTry = () => {
@@ -138,6 +131,7 @@ function App() {
                   }}
                   noValidate
                   autoComplete="off"
+                  key={item.number}
                 >
                   <TextField
                     error={item.error}
@@ -163,6 +157,7 @@ function App() {
                   }}
                   noValidate
                   autoComplete="off"
+                  key={item.number}
                 >
                   <TextField
                     error={item.error}
@@ -187,7 +182,7 @@ function App() {
                 onClick={handleOpen}
                 disabled={!enableVerify}
               >
-                Valider
+                Check
               </Button>
             </div>
           </div>
