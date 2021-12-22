@@ -119,7 +119,7 @@ const oauthSignIn = () => {
 }
 
   useEffect(() => {
-    oauthSignIn();
+    //oauthSignIn();
     initialiseMap();
     let interval = null;
     if (start) {
