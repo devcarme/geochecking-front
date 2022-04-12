@@ -94,7 +94,7 @@ body {
 
 .stopwatch {
   position: fixed;
-  top: 125px;
+  top: 140px;
   right: 10px;
   color: #2196f3;
 }
@@ -166,7 +166,7 @@ body {
   }
 
   .stopwatch {
-    top: 39%;
+    top: 50%;
     left: -45px;
   }
 
