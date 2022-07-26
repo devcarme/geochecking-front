@@ -23,3 +23,17 @@ yarn-debug.log*
 yarn-error.log*
 /src/geochecking-335815-28d725a08742.json
 /public/google81a3a40b303e48b6.html
+.gradle
+.idea
+.vscode
+.well-known
+gradle
+android.keystore
+app-*
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+manifest-checksum.txt
+settings.gradle
+app/
